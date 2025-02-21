@@ -1,6 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
-app = Flask(__name__)  # ✅ Initialize the Flask app before using it
+app = Flask(__name__)
+
+# Route to render frontend
+@app.route('/')
+def home():
+    return render_template("index.html")
 
 @app.route('/bfhl', methods=['GET'])
 def get_operation_code():
@@ -28,4 +33,4 @@ def post_data():
     return jsonify(response), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)  # ✅ Run the Flask app
+    app.run(debug=True)
