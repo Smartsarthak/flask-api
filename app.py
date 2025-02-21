@@ -19,9 +19,9 @@ def post_data():
 
     response = {
         "is_success": True,
-        "user_id": "john_doe_17091999",
-        "email": "john@xyz.com",
-        "roll_number": "ABCD123",
+        "user_id": "22BCS13692",
+        "email": "22BCS13692@CUCHD.IN",
+        "roll_number": "13692",
         "numbers": numbers,
         "alphabets": alphabets,
         "highest_alphabet": [highest_alphabet] if highest_alphabet else []
