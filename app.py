@@ -1,9 +1,8 @@
 from flask_cors import CORS  # ✅ Import CORS
-CORS(app)  # ✅ Enable CORS for all routes
-
 from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__, template_folder="templates")  # ✅ Ensures templates are served
+CORS(app)  # ✅ Enable CORS for all routes
 
 @app.route('/')
 def home():
