@@ -1,20 +1,14 @@
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-@app.route('/bfhl', methods=['GET'])
-def get_operation_code():
-    return jsonify({"operation_code": 1}), 200
-
 @app.route('/bfhl', methods=['POST'])
 def post_data():
+    print("Received request:", request.json)  # Debug print
+    if not request.json or "data" not in request.json:
+        return jsonify({"error": "Invalid request"}), 400  # Handle missing data
+    
     data = request.json.get("data", [])
+    print("Processed Data:", data)  # Debug print
 
-    # Separate numbers and alphabets
     numbers = [x for x in data if x.isdigit()]
     alphabets = [x for x in data if x.isalpha()]
-    
-    # Find the highest alphabet (last in A-Z order, case-insensitive)
     highest_alphabet = max(alphabets, key=str.lower) if alphabets else []
 
     response = {
@@ -26,7 +20,5 @@ def post_data():
         "alphabets": alphabets,
         "highest_alphabet": [highest_alphabet] if highest_alphabet else []
     }
+    print("Response Sent:", response)  # Debug print
     return jsonify(response), 200
-
-if __name__ == '__main__':
-    app.run(debug=True)

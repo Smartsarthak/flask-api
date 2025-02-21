@@ -4,6 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask API Frontend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .response-box {
+            background: #eef;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+            white-space: pre-wrap;
+            font-size: 14px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+    </style>
     <script>
         const API_URL = "https://flask-api-1-vhck.onrender.com/bfhl"; // Your API endpoint
 
@@ -44,20 +103,16 @@
     </script>
 </head>
 <body>
-    <h2>Flask API Frontend</h2>
+    <div class="container">
+        <h2>Flask API Frontend</h2>
 
-    <!-- Button to trigger GET request -->
-    <button onclick="getOperationCode()">Get Operation Code</button>
+        <button onclick="getOperationCode()">Get Operation Code</button>
+        
+        <input type="text" id="inputData" placeholder="Enter values (e.g., A, B, 1, 2, C)">
+        <button onclick="sendData()">Send Data</button>
 
-    <br><br>
-
-    <!-- Input field and button for POST request -->
-    <input type="text" id="inputData" placeholder="Enter values (e.g., A, B, 1, 2, C)">
-    <button onclick="sendData()">Send Data</button>
-
-    <br><br>
-
-    <!-- Display API Response -->
-    <pre id="response" style="background: #f4f4f4; padding: 10px; border-radius: 5px;"></pre>
+        <h3>Response:</h3>
+        <div class="response-box" id="response">Response will appear here...</div>
+    </div>
 </body>
 </html>
