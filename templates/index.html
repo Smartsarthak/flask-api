@@ -3,35 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask Frontend</title>
+    <title>Flask API Frontend</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        input, button { margin: 5px; padding: 10px; }
-        #response { margin-top: 20px; font-weight: bold; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .response-box {
+            background: #eef;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+            white-space: pre-wrap;
+            font-size: 14px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
     </style>
-</head>
-<body>
-    <h2>Enter Data for Backend</h2>
-    <input type="text" id="dataInput" placeholder="Enter comma-separated values">
-    <button onclick="sendData()">Send Data</button>
-    
-    <h3>Response:</h3>
-    <div id="response">No data yet...</div>
-
     <script>
+        const API_URL = "https://flask-api-1-vhck.onrender.com/bfhl"; // Your API endpoint
+
+        // Function to get operation code
+        async function getOperationCode() {
+            try {
+                let response = await fetch(API_URL, { method: "GET" });
+                let data = await response.json();
+                document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById("response").innerText = "Error fetching operation code.";
+            }
+        }
+
+        // Function to send data via POST request
         async function sendData() {
-            let inputData = document.getElementById("dataInput").value.split(",");
-            let responseDiv = document.getElementById("response");
+            let inputData = document.getElementById("inputData").value.trim();
+            if (!inputData) {
+                alert("Please enter some data!");
+                return;
+            }
 
-            let response = await fetch("/bfhl", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: inputData })
-            });
+            let dataArray = inputData.split(",").map(item => item.trim()); // Convert input into an array
 
-            let result = await response.json();
-            responseDiv.innerText = JSON.stringify(result, null, 2);
+            try {
+                let response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ data: dataArray })
+                });
+
+                let result = await response.json();
+                document.getElementById("response").innerText = JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById("response").innerText = "Error sending data.";
+            }
         }
     </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Flask API Frontend</h2>
+
+        <button onclick="getOperationCode()">Get Operation Code</button>
+        
+        <input type="text" id="inputData" placeholder="Enter values (e.g., A, B, 1, 2, C)">
+        <button onclick="sendData()">Send Data</button>
+
+        <h3>Response:</h3>
+        <div class="response-box" id="response">Response will appear here...</div>
+    </div>
 </body>
 </html>
