@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
-# ✅ Route to serve frontend
+# Route to render frontend
 @app.route('/')
 def home():
-    return render_template("index.html")  # This serves your HTML frontend
+    return render_template("index.html")
 
 @app.route('/bfhl', methods=['GET'])
 def get_operation_code():
